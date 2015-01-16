@@ -14,7 +14,7 @@ var ButtonGroup = ReactBootstrap.ButtonGroup;
 var StatesLong = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
-        return {stateLong: ''};
+        return {};
     },
     render: function() {
         return (
@@ -257,7 +257,7 @@ var StatesUSPTO = React.createClass({
 var Address = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
-        return {street: '', city: '', zip: '' };
+        return {};
     },
     render: function() {
         return (
@@ -266,18 +266,18 @@ var Address = React.createClass({
                     <Panel header={this.props.header} eventKey='1'>
                         <Row>
                             <Col xs={6}>
-                                <Input id="street" ref="Street Address" type="text" label="Street Address" valueLink={this.linkState('street')} />
+                                <Input type="text" label="Street Address" valueLink={this.linkState('street')} />
                             </Col>
                             <Col xs={6}>
-                                <Input id="city" ref="City" type="text" label="City" valueLink={this.linkState('city')} />
+                                <Input type="text" label="City" valueLink={this.linkState('city')} />
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={6}>
-                                <StatesLong></StatesLong>
+                                <StatesLong ref="state"></StatesLong>
                             </Col>
                             <Col xs={6}>
-                                <Input id="zip" ref="Zip" type="text" pattern="(\d{5}([\-]\d{4})?)" label="Zip" valueLink={this.linkState('zip')} />
+                                <Input type="text" pattern="(\d{5}([\-]\d{4})?)" label="Zip" valueLink={this.linkState('zip')} />
                             </Col>
                         </Row>
                     </Panel>
@@ -288,6 +288,10 @@ var Address = React.createClass({
 });
 
 var Contact = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
             <div>
@@ -295,13 +299,13 @@ var Contact = React.createClass({
                     <Panel header={this.props.header} eventKey='1'>
                         <Row>
                             <Col xs={4}>
-                                <Input ref="Contact" type="text" label="Contact" defaultValue="" />
+                                <Input type="text" label="Contact" valueLink={this.linkState('contact')} defaultValue="" />
                             </Col>
                             <Col xs={4}>
-                                <Phone></Phone>
+                                <Phone ref="phone"></Phone>
                             </Col>
                             <Col xs={4}>
-                                <Email></Email>
+                                <Email ref="email"></Email>
                             </Col>
                         </Row>
                     </Panel>
@@ -312,23 +316,27 @@ var Contact = React.createClass({
 });
 
 var Reference = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function(){
         return (
             <div>
                 <Row>
                     <Col xs={6}>
-                        <Input ref="Company Name" type="text" label="Company Name" defaultValue="" />
+                        <Input type="text" label="Company Name" valueLink={this.linkState('companyName')}defaultValue="" />
                     </Col>
                     <Col xs={6}>
-                        <Input ref="Contact Name" type="text" label="Contact Name" defaultValue="" />
+                        <Input type="text" label="Contact Name" valueLink={this.linkState('contactName')} defaultValue="" />
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <Phone></Phone>
+                        <Phone ref="phone"></Phone>
                     </Col>
                     <Col xs={6}>
-                        <Email></Email>
+                        <Email ref="email"></Email>
                     </Col>
                 </Row>
             </div>
@@ -337,33 +345,49 @@ var Reference = React.createClass({
 });
 
 var Phone = React.createClass ({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
    render: function() {
        return (
-           <Input id="phone" ref="Phone" type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" defaultValue="" />
+           <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" valueLink={this.linkState('phone')} defaultValue="" />
        );
    }
 });
 
 var CellPhone = React.createClass ({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
-            <Input ref="Phone" type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" defaultValue="" />
+            <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" valueLink={this.linkState('cellPhone')} defaultValue="" />
         );
     }
 });
 
 var Fax = React.createClass ({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
-            <Input id="fax" ref="Fax" type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Fax" defaultValue="" />
+            <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Fax" valueLink={this.linkState('fax')} defaultValue="" />
         );
     }
 });
 
 var Email = React.createClass ({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
-            <Input ref="Email" type="email" label="Email" defaultValue="" />
+            <Input type="email" label="Email" valueLink={this.linkState('email')} defaultValue="" />
         );
     }
 });
@@ -994,38 +1018,38 @@ var Principal = React.createClass ({
 var BankFields = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
-        return {nameOfBank: ''};
+        return {};
     },
     render: function() {
         return (
             <div>
-                <Input id="nameOfBank" ref="Name of Bank" type="text" label="Name of Bank" valueLink={this.linkState('nameOfBank')} />
+                <Input id="nameOfBank" type="text" label="Name of Bank" valueLink={this.linkState('nameOfBank')} />
                 <h4>Address of Branch of Account</h4>
-                <Address header="Address"></Address>
+                <Address ref="bankAddress" header="Address"></Address>
                 <Row>
                     <Col xs={6}>
-                        <Input id="typeOfAccount" type="select" label="Type of Account(s)">
-                            <option value="0">Checking</option>
-                            <option value="1">Savings</option>
-                            <option value="2">Other</option>
+                        <Input id="typeOfAccount" type="select" label="Type of Account(s)" valueLink={this.linkState('typeOfAccount')}>
+                            <option value="Checking">Checking</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Other">Other</option>
                         </Input>
                     </Col>
                     <Col xs={6}>
-                        <Input id="accountNumber" ref="Account No." type="text" label="Account No." defaultValue="" />
+                        <Input type="text" label="Account No." valueLink={this.linkState('accountNumber')} defaultValue="" />
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={4}>
-                        <Input id="nameOfOfficer" ref="Name of Officer" type="text" label="Name of Officer" defaultValue="" />
+                        <Input type="text" label="Name of Officer" valueLink={this.linkState('nameOfOfficer')} defaultValue="" />
                     </Col>
                     <Col xs={4}>
-                        <Phone></Phone>
+                        <Phone ref="bankPhone"></Phone>
                     </Col>
                     <Col xs={4}>
-                        <Fax></Fax>
+                        <Fax ref="bankFax"></Fax>
                     </Col>
                 </Row>
-                <Input id="numberOfYearsWithTheBank" ref="No. of Years with the Bank" type="text" label="No. of Years with the Bank" defaultValue="" />
+                <Input type="text" label="No. of Years with the Bank" valueLink={this.linkState('noOfYearsWithTheBank')} defaultValue=""/>
             </div>
         )
     }
@@ -1035,8 +1059,8 @@ var BankRow = React.createClass({
     render: function() {
         return (
             <tr>
-                <td>{this.props.item.name}</td>
-                <td>{this.props.item.address}</td>
+                <td>{this.props.item.nameOfBank}</td>
+                <td>{this.props.item.bankAddress}</td>
                 <td>{this.props.item.typeOfAccount}</td>
                 <td>{this.props.item.accountNumber}</td>
                 <td>{this.props.item.nameOfOfficer}</td>
@@ -1079,7 +1103,14 @@ var Bank = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.bankFields.state);
+        var bankAddress = Object.create(this.refs.bankFields.refs.bankAddress);
+        var phone = Object.create(this.refs.bankFields.refs.bankPhone.state);
+        var fax = Object.create(this.refs.bankFields.refs.bankFax.state);
+
+        item.bankAddress = bankAddress.state.street + ', ' + bankAddress.state.city;
+        item.phone = phone.phone;
+        item.fax = fax.fax;
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1088,7 +1119,7 @@ var Bank = React.createClass ({
     render: function() {
         return (
             <div>
-                <BankFields></BankFields>
+                <BankFields ref="bankFields"></BankFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <BankTable collection={this.state.collection}></BankTable>
             </div>
@@ -1097,36 +1128,40 @@ var Bank = React.createClass ({
 });
 
 var InstitutionFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
             <div>
-                <Input ref="Name of Institution" type="text" label="Name of Institution" defaultValue="" />
-                <Address header="Address"></Address>
+                <Input type="text" label="Name of Institution" valueLink={this.linkState('nameOfInstitution')} defaultValue="" />
+                <Address ref="institutionAddress" header="Address"></Address>
 
                 <Row>
                     <Col xs={4}>
-                        <Input ref="Name of officer" type="text" label="Name of officer" defaultValue="" />
+                        <Input type="text" label="Name of officer" valueLink={this.linkState('nameOfOfficer')} defaultValue="" />
                     </Col>
                     <Col xs={4}>
-                        <Phone></Phone>
+                        <Phone ref="institutionPhone"></Phone>
                     </Col>
                     <Col xs={4}>
-                        <Fax></Fax>
+                        <Fax ref="institutionFax"></Fax>
                     </Col>
                 </Row>
 
-                <Input ref="No. of Years with the Bank" type="text" label="No. of Years with the Bank" defaultValue="" />
+                <Input type="text" label="No. of Years with the Bank" valueLink={this.linkState('noOfYearsWithTheBank')} defaultValue="" />
 
-                <Input type="select" label="Type of financing">
+                <Input type="select" label="Type of financing" valueLink={this.linkState('typeOfFinancing')}>
                     <option value="0">Term Loan</option>
                     <option value="1">Line of Credit</option>
                     <option value="2">Factoring</option>
                     <option value="3">PO Funding</option>
                 </Input>
 
-                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" />
+                <Input type="text" label="Amount Outstanding" valueLink={this.linkState('amountOutstanding')} defaultValue="" />
 
-                <Input type="select" label="Collateral" multiple>
+                <Input type="select" label="Collateral" valueLink={this.linkState('collateral')} multiple>
                     <option value="0">All Assets</option>
                     <option value="1">Receivables</option>
                     <option value="2">Inventory</option>
@@ -1145,7 +1180,7 @@ var InstitutionRow = React.createClass({
     render: function() {
         return (
             <tr>
-                <td>{this.props.item.name}</td>
+                <td>{this.props.item.nameOfInstitution}</td>
                 <td>{this.props.item.address}</td>
                 <td>{this.props.item.nameOfOfficer}</td>
                 <td>{this.props.item.phone}</td>
@@ -1191,7 +1226,14 @@ var Institution = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.institutionFields.state);
+        var institutionAddress = Object.create(this.refs.institutionFields.refs.institutionAddress);
+        var phone = Object.create(this.refs.institutionFields.refs.institutionPhone.state);
+        var fax = Object.create(this.refs.institutionFields.refs.institutionFax.state);
+
+        item.address = institutionAddress.state.street + ', ' + institutionAddress.state.city;
+        item.phone = phone.phone;
+        item.fax = fax.fax;
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1200,7 +1242,7 @@ var Institution = React.createClass ({
     render: function() {
         return (
             <div>
-                <InstitutionFields></InstitutionFields>
+                <InstitutionFields ref="institutionFields"></InstitutionFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <InstitutionTable collection={this.state.collection}></InstitutionTable>
             </div>
@@ -1209,21 +1251,25 @@ var Institution = React.createClass ({
 });
 
 var CustomerFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
             <div>
                 <Row>
                     <Col xs={4}>
-                        <Input ref="Name" type="text" label="Name" defaultValue=""/>
+                        <Input type="text" label="Name" valueLink={this.linkState('name')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Terms of payments" type="text" label="Terms of payments" defaultValue=""/>
+                        <Input type="text" label="Terms of payments" valueLink={this.linkState('termsOfPayments')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Peak Exposure" type="text" label="Peak Exposure" defaultValue=""/>
+                        <Input type="text" label="Peak Exposure" valueLink={this.linkState('peakExposure')} defaultValue=""/>
                     </Col>
                 </Row>
-                <Input type="file" label="Sample transaction documents (sales contract, purchase order, invoice, proof of delivery and payment, etc.)" help="" />
+                <Input type="file" label="Sample transaction documents (sales contract, purchase order, invoice, proof of delivery and payment, etc.)" valueLink={this.linkState('sampleTransaction')} />
             </div>
         );
     }
@@ -1234,7 +1280,7 @@ var CustomerRow = React.createClass({
         return (
             <tr>
                 <td>{this.props.item.name}</td>
-                <td>{this.props.item.termsOfPayment}</td>
+                <td>{this.props.item.termsOfPayments}</td>
                 <td>{this.props.item.peakExposure}</td>
                 <td>{this.props.item.sampleTransaction}</td>
             </tr>
@@ -1269,7 +1315,7 @@ var Customer = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.customerFields.state);
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1278,7 +1324,7 @@ var Customer = React.createClass ({
     render: function() {
         return (
             <div>
-                <CustomerFields></CustomerFields>
+                <CustomerFields ref="customerFields"></CustomerFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <CustomerTable collection={this.state.collection}></CustomerTable>
             </div>
@@ -1287,11 +1333,15 @@ var Customer = React.createClass ({
 });
 
 var TradeReferenceFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {};
+    },
     render: function() {
         return (
             <div>
-                <Reference></Reference>
-                <Address header="Address"></Address>
+                <Reference ref="reference"></Reference>
+                <Address ref="address" header="Address"></Address>
             </div>
         );
     }
@@ -1339,7 +1389,12 @@ var TradeReference = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.tradeReferenceFields.refs.reference.refs.email.state);
+        item.companyName = this.refs.tradeReferenceFields.refs.reference.state.companyName;
+        item.contactName = this.refs.tradeReferenceFields.refs.reference.state.contactName;
+        item.phone = this.refs.tradeReferenceFields.refs.reference.refs.phone.state.phone;
+        var address = Object.create(this.refs.tradeReferenceFields.refs.address.state);
+        item.address = address.street + ", " + address.city;
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1348,7 +1403,7 @@ var TradeReference = React.createClass ({
     render: function() {
         return (
             <div>
-                <TradeReferenceFields></TradeReferenceFields>
+                <TradeReferenceFields ref="tradeReferenceFields"></TradeReferenceFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <TradeReferenceTable collection={this.state.collection}></TradeReferenceTable>
             </div>
@@ -1357,12 +1412,16 @@ var TradeReference = React.createClass ({
 });
 
 var BuyerReferenceFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {collection: []};
+    },
     render: function() {
         return (
             <div>
-                <Reference></Reference>
-                <Address header="Address"></Address>
-                <Input ref="Total A/R You Intend to Factor on a Monthly Basis" type="text" label="Total A/R You Intend to Factor on a Monthly Basis" defaultValue=""/>
+                <Reference ref="reference"></Reference>
+                <Address ref="address" header="Address"></Address>
+                <Input type="text" label="Total A/R You Intend to Factor on a Monthly Basis" valueLink={this.linkState('totalAR')} defaultValue=""/>
             </div>
         );
     }
@@ -1412,7 +1471,13 @@ var BuyerReference = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.buyerReferenceFields.refs.reference.refs.email.state);
+        item.companyName = this.refs.buyerReferenceFields.refs.reference.state.companyName;
+        item.contactName = this.refs.buyerReferenceFields.refs.reference.state.contactName;
+        item.phone = this.refs.buyerReferenceFields.refs.reference.refs.phone.state.phone;
+        var address = Object.create(this.refs.buyerReferenceFields.refs.address.state);
+        item.address = address.street + ", " + address.city;
+        item.totalAR = this.refs.buyerReferenceFields.state.totalAR;
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1421,7 +1486,7 @@ var BuyerReference = React.createClass ({
     render: function() {
         return (
             <div>
-                <BuyerReferenceFields></BuyerReferenceFields>
+                <BuyerReferenceFields ref="buyerReferenceFields"></BuyerReferenceFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <BuyerReferenceTable collection={this.state.collection}></BuyerReferenceTable>
             </div>
@@ -1430,22 +1495,26 @@ var BuyerReference = React.createClass ({
 });
 
 var ProductLicenseFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {collection: []};
+    },
     render: function() {
         return (
             <div>
                 <Row>
                     <Col xs={4}>
-                        <Input ref="Licensor" type="text" label="Licensor" defaultValue=""/>
+                        <Input type="text" label="Licensor" valueLink={this.linkState('licensor')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Mark" type="text" label="Mark" defaultValue=""/>
+                        <Input type="text" label="Mark" valueLink={this.linkState('mark')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Product" type="text" label="Product" defaultValue=""/>
+                        <Input type="text" label="Product" valueLink={this.linkState('product')} defaultValue=""/>
                     </Col>
                 </Row>
 
-                <Input ref="Upload licence agreement" type="file" label="Upload licence agreement" defaultValue=""/>
+                <Input ref="Upload licence agreement" type="file" label="Upload licence agreement" valueLink={this.linkState('licenceAgreement')} defaultValue=""/>
             </div>
         );
     }
@@ -1491,7 +1560,7 @@ var ProductLicense = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.productLicenseFields.state);
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1500,7 +1569,7 @@ var ProductLicense = React.createClass ({
     render: function() {
         return (
             <div>
-                <ProductLicenseFields></ProductLicenseFields>
+                <ProductLicenseFields ref="productLicenseFields"></ProductLicenseFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <ProductLicenseTable collection={this.state.collection}></ProductLicenseTable>
             </div>
@@ -1509,18 +1578,22 @@ var ProductLicense = React.createClass ({
 });
 
 var ConsigneeFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {collection: []};
+    },
     render: function() {
         return (
             <div>
                 <Row>
                     <Col xs={4}>
-                        <Input ref="Consignee" type="text" label="Consignee" defaultValue=""/>
+                        <Input type="text" label="Consignee" valueLink={this.linkState('consignee')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Product Consigned" type="text" label="Product Consigned" defaultValue=""/>
+                        <Input type="text" label="Product Consigned" valueLink={this.linkState('productConsigned')} defaultValue=""/>
                     </Col>
                     <Col xs={4}>
-                        <Input ref="Average annual volume" type="text" label="Average annual volume" defaultValue=""/>
+                        <Input type="text" label="Average annual volume" valueLink={this.linkState('averageAnnualVolume')} defaultValue=""/>
                     </Col>
                 </Row>
             </div>
@@ -1534,7 +1607,7 @@ var ConsigneeRow = React.createClass({
             <tr>
                 <td>{this.props.item.consignee}</td>
                 <td>{this.props.item.productConsigned}</td>
-                <td>{this.props.item.averageAnualVolume}</td>
+                <td>{this.props.item.averageAnnualVolume}</td>
             </tr>
         );
     }
@@ -1566,7 +1639,7 @@ var Consignee = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.consigneeFields.state);
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1575,7 +1648,7 @@ var Consignee = React.createClass ({
     render: function() {
         return (
             <div>
-                <ConsigneeFields></ConsigneeFields>
+                <ConsigneeFields ref="consigneeFields"></ConsigneeFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <ConsigneeTable collection={this.state.collection}></ConsigneeTable>
             </div>
@@ -1584,26 +1657,30 @@ var Consignee = React.createClass ({
 });
 
 var FinancialsFrequencyFields = React.createClass({
+    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+        return {collection: []};
+    },
     render: function() {
         return (
             <div>
                 <Row>
                     <Col xs={6}>
-                        <Input type="select" label="Frequency">
-                            <option value="0">Monthly</option>
-                            <option value="1">Quarterly</option>
-                            <option value="2">Biannually</option>
-                            <option value="3">Annually</option>
-                            <option value="4">Other</option>
+                        <Input type="select" label="Frequency" valueLink={this.linkState('frequency')} defaultValue="Monthly">
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Biannually">Biannually</option>
+                            <option value="Annually">Annually</option>
+                            <option value="Other">Other</option>
                         </Input>
                     </Col>
                     <Col xs={6}>
-                        <Input type="select" label="Preparation">
-                            <option value="0">Internally Prepared</option>
-                            <option value="1">Compiled</option>
-                            <option value="2">Reviewed</option>
-                            <option value="3">Audited</option>
-                            <option value="4">Other</option>
+                        <Input type="select" label="Preparation" valueLink={this.linkState('preparation')} defaultValue="Internally Prepared">
+                            <option value="Internally Prepared">Internally Prepared</option>
+                            <option value="Compiled">Compiled</option>
+                            <option value="Reviewed">Reviewed</option>
+                            <option value="Audited">Audited</option>
+                            <option value="Other">Other</option>
                         </Input>
                     </Col>
                 </Row>
@@ -1648,7 +1725,7 @@ var FinancialsFrequency = React.createClass ({
         return {collection: []};
     },
     handlePlusButton: function(data) {
-        var item = {};
+        var item = Object.create(this.refs.financialFields.state);
 
         this.setState({
             collection: [item].concat(this.state.collection)
@@ -1657,7 +1734,7 @@ var FinancialsFrequency = React.createClass ({
     render: function() {
         return (
             <div>
-                <FinancialsFrequencyFields></FinancialsFrequencyFields>
+                <FinancialsFrequencyFields ref="financialFields"></FinancialsFrequencyFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
                 <FinancialsFrequencyTable collection={this.state.collection}></FinancialsFrequencyTable>
             </div>
