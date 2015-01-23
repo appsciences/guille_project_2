@@ -11,253 +11,60 @@ var TabbedArea = ReactBootstrap.TabbedArea;
 var TabPane = ReactBootstrap.TabPane;
 var ButtonGroup = ReactBootstrap.ButtonGroup;
 
-var StatesLong = React.createClass({
-    mixins: [React.addons.LinkedStateMixin],
+var States = React.createClass({
+    getInitialState: function() {
+        return {
+            data: ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'],
+            options: []
+        }
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+    },
+    render: function() {
+
+        if(this.props.options !== undefined) {
+            for (var i=0; i<this.props.options.length; i++) {
+                this.state.options.push( <option value={this.props.options[i]}>{this.props.options[i]}</option> );
+            }
+        }
+
+        for(var i=0; i<this.state.data.length; i++) {
+            this.state.options.push( <option value={this.state.data[i]}>{this.state.data[i]}</option> );
+        }
+
+        return (
+            <Input type="select" ref="state" label={this.props.label} onBlur={this.handleChange} defaultValue={this.state.options[0]}>
+                {this.state.options}
+            </Input>
+        );
+    }
+});
+
+var Zip = React.createClass ({
     getInitialState: function() {
         return {};
     },
-    render: function() {
-        return (
-            <Input id="states" type="select" label="State" valueLink={this.linkState('stateLong')}>
-                <option value="1">Alabama</option>
-                <option value="2">Alaska</option>
-                <option value="3">Arizona</option>
-                <option value="4">Arkansas</option>
-                <option value="5">California</option>
-                <option value="6">Colorado</option>
-                <option value="7">Connecticut</option>
-                <option value="8">Delaware</option>
-                <option value="9">Florida</option>
-                <option value="10">Georgia</option>
-                <option value="11">Hawaii</option>
-                <option value="12">Idaho</option>
-                <option value="13">Illinois</option>
-                <option value="14">Indiana</option>
-                <option value="15">Iowa</option>
-                <option value="16">Kansas</option>
-                <option value="17">Kentucky</option>
-                <option value="18">Louisiana</option>
-                <option value="19">Maine</option>
-                <option value="20">Maryland</option>
-                <option value="21">Massachusetts</option>
-                <option value="22">Michigan</option>
-                <option value="23">Minnesota</option>
-                <option value="24">Mississippi</option>
-                <option value="25">Missouri</option>
-                <option value="26">Montana</option>
-                <option value="27">Nebraska</option>
-                <option value="28">Nevada</option>
-                <option value="29">New Hampshire</option>
-                <option value="30">New Jersey</option>
-                <option value="31">New Mexico</option>
-                <option value="32">New York</option>
-                <option value="33">North Carolina</option>
-                <option value="34">North Dakota</option>
-                <option value="35">Ohio</option>
-                <option value="36">Oklahoma</option>
-                <option value="37">Oregon</option>
-                <option value="38">Pennsylvania</option>
-                <option value="39">Rhode Island</option>
-                <option value="40">South Carolina</option>
-                <option value="40">South Dakota</option>
-                <option value="42">Tennessee</option>
-                <option value="43">Texas</option>
-                <option value="44">Utah</option>
-                <option value="45">Vermont</option>
-                <option value="46">Virginia</option>
-                <option value="47">Washington</option>
-                <option value="48">West Virginia</option>
-                <option value="49">Wisconsin</option>
-                <option value="50">Wyoming</option>
-            </Input>
-        );
-    }
-});
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
 
-var StatesShort = React.createClass({
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
     render: function() {
         return (
-            <Input type="select" label="State">
-                <option value="1">AL</option>
-                <option value="2">AK</option>
-                <option value="3">AZ</option>
-                <option value="4">AR</option>
-                <option value="5">CA</option>
-                <option value="6">CO</option>
-                <option value="7">CT</option>
-                <option value="8">DE</option>
-                <option value="9">FL</option>
-                <option value="10">GA</option>
-                <option value="11">HI</option>
-                <option value="12">ID</option>
-                <option value="13">IL</option>
-                <option value="14">IN</option>
-                <option value="15">IA</option>
-                <option value="16">KS</option>
-                <option value="17">KY</option>
-                <option value="18">LA</option>
-                <option value="19">ME</option>
-                <option value="20">MD</option>
-                <option value="21">MA</option>
-                <option value="22">MI</option>
-                <option value="23">MN</option>
-                <option value="24">MS</option>
-                <option value="25">MO</option>
-                <option value="26">MT</option>
-                <option value="27">NE</option>
-                <option value="28">NV</option>
-                <option value="29">NH</option>
-                <option value="30">NJ</option>
-                <option value="31">NM</option>
-                <option value="32">NY</option>
-                <option value="33">NC</option>
-                <option value="34">ND</option>
-                <option value="35">OH</option>
-                <option value="36">OK</option>
-                <option value="37">OR</option>
-                <option value="38">PA</option>
-                <option value="39">RI</option>
-                <option value="40">SC</option>
-                <option value="41">SD</option>
-                <option value="42">TN</option>
-                <option value="43">TX</option>
-                <option value="44">UT</option>
-                <option value="45">VT</option>
-                <option value="46">VA</option>
-                <option value="47">WA</option>
-                <option value="48">WV</option>
-                <option value="49">WI</option>
-                <option value="50">WY</option>
-            </Input>
-        );
-    }
-});
-
-var StatesFederalShort = React.createClass({
-    render: function() {
-        return (
-            <Input type="select" label="State">
-                <option value="0">Federal</option>
-                <option value="1">AL</option>
-                <option value="2">AK</option>
-                <option value="3">AZ</option>
-                <option value="4">AR</option>
-                <option value="5">CA</option>
-                <option value="6">CO</option>
-                <option value="7">CT</option>
-                <option value="8">DE</option>
-                <option value="9">FL</option>
-                <option value="10">GA</option>
-                <option value="11">HI</option>
-                <option value="12">ID</option>
-                <option value="13">IL</option>
-                <option value="14">IN</option>
-                <option value="15">IA</option>
-                <option value="16">KS</option>
-                <option value="17">KY</option>
-                <option value="18">LA</option>
-                <option value="19">ME</option>
-                <option value="20">MD</option>
-                <option value="21">MA</option>
-                <option value="22">MI</option>
-                <option value="23">MN</option>
-                <option value="24">MS</option>
-                <option value="25">MO</option>
-                <option value="26">MT</option>
-                <option value="27">NE</option>
-                <option value="28">NV</option>
-                <option value="29">NH</option>
-                <option value="30">NJ</option>
-                <option value="31">NM</option>
-                <option value="32">NY</option>
-                <option value="33">NC</option>
-                <option value="34">ND</option>
-                <option value="35">OH</option>
-                <option value="36">OK</option>
-                <option value="37">OR</option>
-                <option value="38">PA</option>
-                <option value="39">RI</option>
-                <option value="40">SC</option>
-                <option value="41">SD</option>
-                <option value="42">TN</option>
-                <option value="43">TX</option>
-                <option value="44">UT</option>
-                <option value="45">VT</option>
-                <option value="46">VA</option>
-                <option value="47">WA</option>
-                <option value="48">WV</option>
-                <option value="49">WI</option>
-                <option value="50">WY</option>
-            </Input>
-        );
-    }
-});
-
-var StatesUSPTO = React.createClass({
-    render: function() {
-        return (
-            <Input type="select" label="State">
-                <option value="1">Alabama</option>
-                <option value="2">Alaska</option>
-                <option value="3">Arizona</option>
-                <option value="4">Arkansas</option>
-                <option value="5">California</option>
-                <option value="6">Colorado</option>
-                <option value="7">Connecticut</option>
-                <option value="8">Delaware</option>
-                <option value="9">Florida</option>
-                <option value="10">Georgia</option>
-                <option value="11">Hawaii</option>
-                <option value="12">Idaho</option>
-                <option value="13">Illinois</option>
-                <option value="14">Indiana</option>
-                <option value="15">Iowa</option>
-                <option value="16">Kansas</option>
-                <option value="17">Kentucky</option>
-                <option value="18">Louisiana</option>
-                <option value="19">Maine</option>
-                <option value="20">Maryland</option>
-                <option value="21">Massachusetts</option>
-                <option value="22">Michigan</option>
-                <option value="23">Minnesota</option>
-                <option value="24">Mississippi</option>
-                <option value="25">Missouri</option>
-                <option value="26">Montana</option>
-                <option value="27">Nebraska</option>
-                <option value="28">Nevada</option>
-                <option value="29">New Hampshire</option>
-                <option value="30">New Jersey</option>
-                <option value="31">New Mexico</option>
-                <option value="32">New York</option>
-                <option value="33">North Carolina</option>
-                <option value="34">North Dakota</option>
-                <option value="35">Ohio</option>
-                <option value="36">Oklahoma</option>
-                <option value="37">Oregon</option>
-                <option value="38">Pennsylvania</option>
-                <option value="39">Rhode Island</option>
-                <option value="40">South Carolina</option>
-                <option value="40">South Dakota</option>
-                <option value="42">Tennessee</option>
-                <option value="43">Texas</option>
-                <option value="44">Utah</option>
-                <option value="45">Vermont</option>
-                <option value="46">Virginia</option>
-                <option value="47">Washington</option>
-                <option value="48">West Virginia</option>
-                <option value="49">Wisconsin</option>
-                <option value="50">Wyoming</option>
-                <option value="51">USPTO</option>
-                <option value="52">Other</option>
-            </Input>
+            <Input type="text" ref="zip" label="Zip" bsStyle={this.state.bsStyle} pattern="^[0-9]{1,5}$" onBlur={this.handleChange} />
         );
     }
 });
 
 var Address = React.createClass({
-    mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
         return {};
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
     },
     render: function() {
         return (
@@ -266,18 +73,18 @@ var Address = React.createClass({
                     <Panel header={this.props.header} eventKey='1'>
                         <Row>
                             <Col xs={6}>
-                                <Input type="text" label="Street Address" valueLink={this.linkState('street')} />
+                                <Input id="streetAddress" ref="streetAddress" type="text" label="Street Address" onBlur={this.handleChange}/>
                             </Col>
                             <Col xs={6}>
-                                <Input type="text" label="City" valueLink={this.linkState('city')} />
+                                <Input id="city" type="text" ref="city" label="City" onBlur={this.handleChange}/>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={6}>
-                                <StatesLong ref="state"></StatesLong>
+                                <States ref="state" label="State" simple></States>
                             </Col>
                             <Col xs={6}>
-                                <Input type="text" pattern="(\d{5}([\-]\d{4})?)" label="Zip" valueLink={this.linkState('zip')} />
+                                <Zip ref="zip" simple></Zip>
                             </Col>
                         </Row>
                     </Panel>
@@ -345,49 +152,73 @@ var Reference = React.createClass({
 });
 
 var Phone = React.createClass ({
-    mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
         return {};
     },
-   render: function() {
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
+    render: function() {
        return (
-           <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" valueLink={this.linkState('phone')} defaultValue="" />
-       );
+           <Input type="text" id="phone" ref="phone" bsStyle={this.state.bsStyle} pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" onBlur={this.handleChange} defaultValue="" />
+       );2
    }
 });
 
 var CellPhone = React.createClass ({
-    mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
         return {};
     },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
     render: function() {
         return (
-            <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Phone" valueLink={this.linkState('cellPhone')} defaultValue="" />
+            <Input type="text" id="cellPhone" bsStyle={this.state.bsStyle} pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Cell Phone" onBlur={this.handleChange} defaultValue="" />
         );
     }
 });
 
 var Fax = React.createClass ({
-    mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
         return {};
     },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
     render: function() {
         return (
-            <Input type="text" pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Fax" valueLink={this.linkState('fax')} defaultValue="" />
+            <Input type="text" id="fax" bsStyle={this.state.bsStyle} pattern="\d{3}[\-]\d{3}[\-]\d{4}" label="Fax" onBlur={this.handleChange} defaultValue="" />
         );
     }
 });
 
 var Email = React.createClass ({
-    mixins: [React.addons.LinkedStateMixin],
     getInitialState: function() {
         return {};
     },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
     render: function() {
         return (
-            <Input type="email" label="Email" valueLink={this.linkState('email')} defaultValue="" />
+            <Input type="email" id="email" ref="email" bsStyle={this.state.bsStyle} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" label="Email" onBlur={this.handleChange} defaultValue="" />
         );
     }
 });
@@ -453,6 +284,24 @@ var DaySelect = React.createClass ({
     }
 });
 
+var TaxIDNumber = React.createClass ({
+    getInitialState: function() {
+        return {};
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
+    render: function() {
+        return (
+            <Input ref="taxIdNumber" label="Tax ID No." bsStyle={this.state.bsStyle} pattern="\d{2}[\-]\d{7}" type="text" onBlur={this.handleChange} defaultValue=""/>
+        );
+    }
+});
+
 var TimePeriodAmount = React.createClass({
     render: function() {
         return React.DOM.div({},
@@ -494,6 +343,9 @@ var PeriodAmountQuestion = React.createClass ({
             });
         }
     },
+    handleNoClick: function(data) {
+        this.setState({collection: []});
+    },
     render: function() {
         return (
             <div>
@@ -506,7 +358,7 @@ var PeriodAmountQuestion = React.createClass ({
                     <Col xs={12}>
                         <ButtonGroup>
                             <Button onClick={this.handleYesClick}>Yes</Button>
-                            <Button>No</Button>
+                            <Button onClick={this.handleNoClick}>No</Button>
                         </ButtonGroup>
                     </Col>
                 </Row>
@@ -564,8 +416,7 @@ var TimePeriodTaxingAuthority = React.createClass({
                                 <Input ref="Time Period" type="text" label="Time Period" defaultValue="" />
                             </Col>
                             <Col xs={6}>
-                                <Input ref="Taxing Authority" type="text" label="Taxing Authority" defaultValue="" />
-                                <StatesLong></StatesLong>
+                                <States options={['Federal']} label="Taxing Authority"></States>
                             </Col>
                         </Row>
                     </div>
@@ -618,6 +469,24 @@ var TaxReturnsQuestion = React.createClass ({
     }
 });
 
+var FullDateInput = React.createClass ({
+    getInitialState: function() {
+        return {};
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
+    render: function() {
+        return (
+            <Input label={this.props.label} bsStyle={this.state.bsStyle} pattern="\d{1,2}/\d{1,2}/\d{4}" type="text" onBlur={this.handleChange} defaultValue=""/>
+        );
+    }
+});
+
 var AmountAgainstCourt = React.createClass({
     render: function() {
         return React.DOM.div({},
@@ -637,7 +506,7 @@ var AmountAgainstCourt = React.createClass({
                                 <Input ref="Court" type="text" label="Court" defaultValue="" />
                             </Col>
                             <Col xs={6}>
-                                <Input ref="Approximate Date" type="text" label="Approximate Date" defaultValue="" />
+                                <FullDateInput label="Approximate Date"></FullDateInput>
                             </Col>
                         </Row>
                     </div>
@@ -709,7 +578,7 @@ var AmountSoughtAgainstCourt = React.createClass({
                                 <Input ref="Court" type="text" label="Court" defaultValue="" />
                             </Col>
                             <Col xs={6}>
-                                <Input ref="Approximate Date Complaint Filed" type="text" label="Approximate Date Complaint Filed" defaultValue="" />
+                                <FullDateInput label="Approximate Date Complaint Filed"></FullDateInput>
                             </Col>
                         </Row>
                     </div>
@@ -779,7 +648,7 @@ var VoluntaryCourtApproximate = React.createClass({
                                 <Input ref="Court" type="text" label="Court" defaultValue="" />
                             </Col>
                             <Col xs={4}>
-                                <Input ref="Approximate Date Complaint Filed" type="text" label="Approximate Date Complaint Filed" defaultValue="" />
+                                <FullDateInput label="Approximate Date Complaint Filed"></FullDateInput>
                             </Col>
                         </Row>
                     </div>
@@ -832,7 +701,50 @@ var BankruptcyQuestion = React.createClass ({
     }
 });
 
+var Percentage = React.createClass({
+    getInitialState: function() {
+        return {};
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
+    render: function() {
+        return (
+            <Input id="percentage" ref="percentage" type="text" label="%" bsStyle={this.state.bsStyle} pattern="^[0-9]{1,2}$" onBlur={this.handleChange} defaultValue="" />
+        );
+    }
+});
+
+var CompanyFYE = React.createClass({
+    getInitialState: function() {
+        return {};
+    },
+    handleChange: function(e) {
+        this.state[e.target.id] = e.target.value;
+
+        this.setState({
+            bsStyle: (e.target.value.match(e.target.pattern) === null ? "error" : "success")
+        });
+    },
+    render: function() {
+        return (
+            <Input ref="Company's FYE" type="text" bsStyle={this.state.bsStyle} pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])\d\d" onBlur={this.handleChange} label="Company's FYE" defaultValue=""/>
+        );
+    }
+});
+
 var EquityHoldersFields = React.createClass({
+    getInitialState: function() {
+        return {};
+    },
+    handleChange: function(e) {
+        this.props.collection[this.props.index][e.target.id] = e.target.value;
+        //this.state[e.target.id] = e.target.value;
+    },
     render: function() {
         return React.DOM.div({},
             this.props.collection.map(function() {
@@ -840,10 +752,10 @@ var EquityHoldersFields = React.createClass({
                     <div>
                         <Row>
                             <Col xs={6}>
-                                <Input ref="Name" type="text" label="Name" defaultValue="" />
+                                <Input ref="equityName" type="text" onBlur={this.handleChange} label="Name" defaultValue="" />
                             </Col>
                             <Col xs={6}>
-                                <Input ref="%" type="text" label="%" defaultValue="" />
+                                <Percentage ref="percentage" simple></Percentage>
                             </Col>
                         </Row>
                     </div>
@@ -857,101 +769,17 @@ var EquityHolders = React.createClass ({
     getInitialState: function() {
         return {collection: [0]};
     },
-    handlePlusButton: function(data) {
-        var item = this.state.collection.length;
+    handlePlusButton: function() {
+        var result = Utils.getRefs(this, false);
 
         this.setState({
-            collection: [item].concat(this.state.collection)
+            collection: [result.equityHolders].concat(this.state.collection)
         });
     },
     render: function() {
         return (
             <div>
-                <EquityHoldersFields collection={this.state.collection}></EquityHoldersFields>
-                <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
-            </div>
-        );
-    }
-});
-
-var NameStateLongFields = React.createClass({
-    render: function() {
-        return React.DOM.div({},
-            this.props.collection.map(function() {
-                return (
-                    <div>
-                        <Row>
-                            <Col xs={6}>
-                                <Input ref="Name" type="text" label="Name" defaultValue="" />
-                            </Col>
-                            <Col xs={6}>
-                                <StatesLong></StatesLong>
-                            </Col>
-                        </Row>
-                    </div>
-                );
-            })
-        );
-    }
-});
-
-var NameStateLong = React.createClass ({
-    getInitialState: function() {
-        return {collection: [0]};
-    },
-    handlePlusButton: function(data) {
-        var item = this.state.collection.length;
-
-        this.setState({
-            collection: [item].concat(this.state.collection)
-        });
-    },
-    render: function() {
-        return (
-            <div>
-                <NameStateLongFields collection={this.state.collection}></NameStateLongFields>
-                <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
-            </div>
-        );
-    }
-});
-
-var NameStateUSPTOFields = React.createClass({
-    render: function() {
-        return React.DOM.div({},
-            this.props.collection.map(function() {
-                return (
-                    <div>
-                        <Row>
-                            <Col xs={6}>
-                                <Input ref="Name" type="text" label="Name" defaultValue="" />
-                            </Col>
-                            <Col xs={6}>
-                                <StatesUSPTO></StatesUSPTO>
-                            </Col>
-                        </Row>
-                    </div>
-                );
-            })
-        );
-    }
-});
-
-var NameStateUSPTO = React.createClass ({
-    getInitialState: function() {
-        return {collection: [0]};
-    },
-    handlePlusButton: function(data) {
-        var item = this.state.collection.length;
-
-        this.setState({
-            collection: [item].concat(this.state.collection)
-        });
-    },
-    render: function() {
-        return (
-            <div>
-                <NameStateUSPTOFields collection={this.state.collection}></NameStateUSPTOFields>
+                <EquityHoldersFields ref="equityHolders" collection={this.state.collection} index={this.state.collection.length} complex></EquityHoldersFields>
                 <Button bsStyle="primary" onClick={this.handlePlusButton}>+</Button>
             </div>
         );
@@ -964,29 +792,29 @@ var PrincipalFields = React.createClass({
             this.props.collection.map(function() {
                 return (
                     <div>
-                        <Input ref="Name" type="text" label="Name" defaultValue=""/>
-                        <Address header="Address"></Address>
-                        <Input ref="Social Security No." type="text" label="Social Security No." defaultValue=""/>
+                        <Input ref="principalName" type="text" label="Name" defaultValue=""/>
+                        <Address ref="principalAddress" header="Address" complex></Address>
+                        <Input ref="principalSocialSecurityNumber" type="text" label="Social Security No." defaultValue=""/>
 
                         <h4>Home address</h4>
-                        <Address header="Address"></Address>
+                        <Address ref="principalHomeAddress" header="Address" complex></Address>
 
-                        <Input type="select" label="">
-                            <option value="0">Own</option>
-                            <option value="1">Rent</option>
+                        <Input ref="principalOwnRent" type="select" label="Own/Rent" defaultValue="Own">
+                            <option value="Own">Own</option>
+                            <option value="Rent">Rent</option>
                         </Input>
 
                         <Row>
                             <Col xs={6}>
-                                <Phone></Phone>
+                                <Phone ref="principalPhone" simple></Phone>
                             </Col>
                             <Col xs={6}>
-                                <CellPhone></CellPhone>
+                                <CellPhone ref="principalCellPhone" simple></CellPhone>
                             </Col>
                         </Row>
 
-                        <Input ref="Years with the company" type="text" label="Years with the company" defaultValue=""/>
-                        <Input ref="Social Security Industry" type="text" label="Years with the Industry" defaultValue=""/>
+                        <Input ref="principalYearsWithTheCompany" type="text" label="Years with the company" defaultValue=""/>
+                        <Input ref="principalSocialSecurityIndustry" type="text" label="Years with the Industry" defaultValue=""/>
                     </div>
                 );
             })
@@ -1742,25 +1570,164 @@ var FinancialsFrequency = React.createClass ({
     }
 });
 
-var Form = React.createClass({
+var ContactInfoForm = React.createClass({
+    handleSubmit: function(data, b) {
+        var result = Utils.getRefs(this, false);
 
+        ParseService.Save(
+            "ContactInfo",
+            result,
+            function(response) {
+                console.log('New object created with objectId: ' + response.id);
+            },
+            function(response, error) {
+                console.log('Error: ' + response.message);
+            }
+        );
+    },
+    render: function() {
+        return (
+            <div>
+                <form>
+                    <h2>Contact Info</h2>
+
+                    <Input id="name" ref="name" type="text" label="Name" defaultValue="" />
+                    <Address header="Address" ref="address" complex></Address>
+                    <Row>
+                        <Col xs={6}>
+                            <Phone ref="phone" simple></Phone>
+                        </Col>
+                        <Col xs={6}>
+                            <Email ref="email" simple></Email>
+                        </Col>
+                    </Row>
+
+                    <div className="pull-right">
+                        <Button bsStyle="primary" className="btn-spaced" onClick={this.handleSubmit}>Save</Button>
+                        <Button bsStyle="primary" onClick={this.next}>Next</Button>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+});
+
+var CompanyInformationForm = React.createClass({
+    handleSubmit: function(data, b) {
+        var result = Utils.getRefs(this, false);
+
+        console.log(result);
+
+        ParseService.Save(
+            "CompanyInformation",
+            result,
+            function(response) {
+                console.log('New object created with objectId: ' + response.id);
+            },
+            function(response, error) {
+                console.log('Error: ' + response.message);
+            }
+        );
+    },
+    render: function() {
+        return (
+            <div>
+                <form>
+                    <h2>Company Information</h2>
+
+                    <Row>
+                        <Col xs={6}>
+                            <Input ref="companyName" type="text" label="Name" defaultValue=""/>
+                        </Col>
+                        <Col xs={6}>
+                            <Input type="select" ref="typeOfEntity" label="Type of entity" defaultValue="Corp">
+                                <option value="Corp">Corp</option>
+                                <option value="LLC">LLC</option>
+                                <option value="LP">LP</option>
+                                <option value="GP">GP</option>
+                                <option value="Sole Proprietorship">Sole Proprietorship</option>
+                                <option value="Other">Other</option>
+                            </Input>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col xs={6}>
+                            <TaxIDNumber ref="taxIdNumber" simple></TaxIDNumber>
+                        </Col>
+                        <Col xs={6}>
+                            <States label="State" ref="state" simple></States>
+                        </Col>
+                    </Row>
+
+                    <Input type="textarea" ref="companyBusiness" label="Describe company's business" defaultValue="" />
+
+                    <h4>List equity holders and their percentage ownership</h4>
+
+                    <Row>
+                        <Col xs={12}>
+                            <EquityHolders ref="equityHolders" collection></EquityHolders>
+                        </Col>
+                    </Row>
+
+                    <h4>List all subsidiaries</h4>
+
+                    <Row>
+                        <Col xs={6}>
+                            <Input ref="subsidiaryName" type="text" label="Name" defaultValue=""/>
+                        </Col>
+                        <Col xs={6}>
+                            <States ref="subsidiaryState" label="State" simple></States>
+                        </Col>
+                    </Row>
+
+                    <h4>List all affiliates (companies whose equity is at least 50% owned by any combination of the Company's principals)</h4>
+
+                    <Row>
+                        <Col xs={6}>
+                            <Input ref="affiliateName" type="text" label="Name" defaultValue=""/>
+                        </Col>
+                        <Col xs={6}>
+                            <States ref="affiliateState" label="State" simple></States>
+                        </Col>
+                    </Row>
+
+                    <h4>Tradenames, tradestyles and trademarks (if any)</h4>
+                    <Row>
+                        <Col xs={6}>
+                            <Input ref="tradenamesName" type="text" label="Name" defaultValue=""/>
+                        </Col>
+                        <Col xs={6}>
+                            <States ref="tradenamesState" options={['USPTO', 'Other']} label="State" simple></States>
+                        </Col>
+                    </Row>
+
+                    <h2>Principals</h2>
+
+                    <Principal ref="principal" complex></Principal>
+
+                    <div className="pull-right">
+                        <Button bsStyle="primary" className="btn-spaced" onClick={this.handleSubmit}>Save</Button>
+                        <Button bsStyle="primary" onClick={this.next}>Next</Button>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+});
+
+var Form = React.createClass({
     getInitialState: function() {
         return {tabKey: 1};
-    },
-
-    handleSubmit: function(data, b) {
-
     },
     next: function() {
         this.state.tabKey++;
         this.handleTabSelect(this.state.tabKey);
     },
-    addBank: function(data, b) {
-
-    },
     handleTabSelect: function(selectedKey) {
-        this.state.tabKey = selectedKey;
-        React.render(<Form/>, document.getElementById('mainForm'));
+        this.setState({
+            tabKey: selectedKey
+        });
     },
     render: function() {
         return (
@@ -1769,331 +1736,10 @@ var Form = React.createClass({
                     <div className="modal-body">
                         <TabbedArea activeKey={this.state.tabKey} onSelect={this.handleTabSelect}>
                             <TabPane eventKey={1} tab="Contact Info">
-
-                                <h2>Contact Info</h2>
-
-                                <Input ref="Name" type="text" label="Name" defaultValue="" />
-                                <Address header="Address"></Address>
-                                <Row>
-                                    <Col xs={6}>
-                                        <Phone></Phone>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Email></Email>
-                                    </Col>
-                                </Row>
-
-                                <Input ref="Name of Bank" type="text" label="Name of Bank" defaultValue="" />
-                                <Address header="Address of Branch of Account"></Address>
-                                <Row>
-                                    <Col xs={6}>
-                                        <Input type="select" label='Type of Account(s)'>
-                                            <option value="Checking">Checkings</option>
-                                            <option value="Savings">Savings</option>
-                                            <option value="Other">Other</option>
-                                        </Input>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Input ref="Account No" type="text" label="Account No" defaultValue="" />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={4}>
-                                        <Input ref="Name of Officer" type="text" label="Name of Officer" defaultValue="" />
-                                    </Col>
-                                    <Col xs={4}>
-                                        <Phone></Phone>
-                                    </Col>
-                                    <Col xs={4}>
-                                        <Fax></Fax>
-                                    </Col>
-                                </Row>
-                                <Input type="select" label='No. of Years with the Bank'>
-                                    <option value="0">less than 1</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">more than 5</option>
-                                </Input>
-                                <Row>
-                                    <div className="pull-right">
-                                        <Button bsStyle="primary" onClick={this.addBank}>Add Bank</Button>
-                                    </div>
-                                </Row>
-
-                                <Input ref="Name of Institution" type="text" label="Name of Institution" defaultValue="" />
-
-                                <Address header="Address of Institution"></Address>
-
-                                <Row>
-                                    <Col xs={4}>
-                                        <Input ref="Name of Officer" type="text" label="Name of Officer" defaultValue="" />
-                                    </Col>
-                                    <Col xs={4}>
-                                        <Phone></Phone>
-                                    </Col>
-                                    <Col xs={4}>
-                                        <Fax></Fax>
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col xs={6}>
-                                        <Input type="select" label='No. of Years with the institution'>
-                                            <option value="0">less than 1</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">more than 5</option>
-                                        </Input>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Input type="select" label='Type of Financing'>
-                                            <option value="0">Term Loan</option>
-                                            <option value="1">Line of Credit</option>
-                                            <option value="2">Factoring</option>
-                                            <option value="3">PO Funding</option>
-                                        </Input>
-                                    </Col>
-                                </Row>
-
-                                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" />
-
-                                <Input type="select" label='Collateral' multiple>
-                                    <option value="0">All Assets</option>
-                                    <option value="1">Receivables</option>
-                                    <option value="2">Inventory</option>
-                                    <option value="3">Equipment</option>
-                                    <option value="4">Real Estate</option>
-                                    <option value="5">Intellectual</option>
-                                    <option value="6">Property</option>
-                                    <option value="7">Other</option>
-                                </Input>
-
-                                <Input type="file" label="Copy of Company's main financing agreement" help="" />
-
-                                <Row>
-                                    <div className="pull-right">
-                                        <Button bsStyle="primary" onClick={this.addInsitution}>Add Institution</Button>
-                                    </div>
-                                </Row>
-
-                                <Input ref="Outstanding A/R" type="text" label="Outstanding A/R" defaultValue="" />
-                                <Input ref="Average Monthly Sales" type="text" label="Average Monthly Sales" defaultValue="" />
-                                <Input ref="Average Number of Active Customers" type="text" label="Average Number of Active Customers" defaultValue="" />
-                                <Input ref="Usual Terms of Sale" type="text" label="Usual Terms of Sale" defaultValue="" />
-
-                                <Input type="file" label="List of principal customers (include contact information, terms of payment and peak exposure for each)" help="" />
-
-                                <label>Sample transaction documents (sales contract, purchase order, invoice, proof of delivery and payment, etc.)</label>
-                                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" buttonAfter={<Button bsStyle="primary" onClick={this.addInsitution}>+</Button>} />
-
-                                <Row>
-                                    <div className="pull-right">
-                                        <Button bsStyle="primary" onClick={this.addInsitution}>Upload</Button>
-                                    </div>
-                                </Row>
-
-                                <label>3 trade references</label>
-
-                                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" />
-                                <Address header="Address"></Address>
-                                <Contact header="Contact"></Contact>
-
-
-                                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" />
-                                <Address header="Address"></Address>
-                                <Contact header="Contact"></Contact>
-
-                                <Input ref="Amount Outstanding" type="text" label="Amount Outstanding" defaultValue="" />
-                                <Address header="Address"></Address>
-                                <Contact header="Contact"></Contact>
-
-                                <Input ref="Total A/R You Intend to Factor on a Monthly Basis" type="text" label="Total A/R You Intend to Factor on a Monthly Basis" defaultValue=""/>
-
-                                <label>Product license agreements (if any)</label>
-                                <Input ref="Licensor" type="text" label="Licensor" defaultValue=""/>
-                                <Input ref="Mark" type="text" label="Mark" defaultValue=""/>
-                                <Input ref="Product" type="text" label="Product" defaultValue=""/>
-                                <Input type="file" label="Upload licence agreement" help="" />
-
-                                <label>Consignment sales (if any)</label>
-                                <Input ref="Consignee" type="text" label="Consignee" defaultValue=""/>
-                                <Input ref="Product consigned" type="text" label="Product consigned" defaultValue=""/>
-                                <Input ref="Average annual volume" type="text" label="Average annual volume" defaultValue=""/>
-
-                                <Input ref="Name of Company's CPA" type="text" label="Name of Company's CPA" defaultValue=""/>
-
-                                <Address header="Address"></Address>
-
-                                <Phone></Phone>
-                                <Fax></Fax>
-
-                                <Input ref="Number of Years Using Services" type="text" label="Number of Years Using Services" defaultValue=""/>
-
-                                <label>Company's FYE</label>
-                                <Row>
-                                    <Col xs={6}>
-                                        <MonthSelect></MonthSelect>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <DaySelect></DaySelect>
-                                    </Col>
-                                </Row>
-
-                                <label>How Often are Financials Generated</label>
-                                <Row>
-                                    <Col xs={6}>
-                                        <Input type="select" multiple>
-                                            <option value="0">Monthly</option>
-                                            <option value="1">Quarterly</option>
-                                            <option value="2">Biannually</option>
-                                            <option value="3">Annually</option>
-                                            <option value="4">Other</option>
-                                        </Input>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Input type="select">
-                                            <option value="0">Internally Prepared</option>
-                                            <option value="1">Compiled</option>
-                                            <option value="2">Reviewed</option>
-                                            <option value="3">Audited</option>
-                                            <option value="4">Other</option>
-                                        </Input>
-                                    </Col>
-                                </Row>
-
-                                <Input ref="No. of Employees" type="text" label="No. of Employees" defaultValue=""/>
-
-                                <Input type="select" label="How often do you pay payroll taxes?">
-                                    <option value="0">Weekly</option>
-                                    <option value="1">Monthly</option>
-                                    <option value="2">Quarterly</option>
-                                </Input>
-
-                                <PeriodAmountQuestion question="Are any Federal payroll taxes past due?"></PeriodAmountQuestion>
-                                <PeriodAmountQuestion question="Are any State payroll taxes past due?"></PeriodAmountQuestion>
-                                <PeriodAmountQuestion question="Are any Federal income taxes past due?"></PeriodAmountQuestion>
-                                <PeriodAmountQuestion question="Are any State income taxes past due?"></PeriodAmountQuestion>
-                                <PeriodAmountQuestion question="Are any State sales taxes past due?"></PeriodAmountQuestion>
-                                <PeriodAmountQuestion question="Are any local sales taxes past due?"></PeriodAmountQuestion>
-                                <UploadQuestion question="Are there any Federal or State Tax Liens?"></UploadQuestion>
-                                <TaxReturnsQuestion question="Have any of your prior tax returns been adjusted?"></TaxReturnsQuestion>
-
-                                <Input ref="Name of Attorney" type="text" label="Name of Attorney" defaultValue=""/>
-
-                                <Address header="Address"></Address>
-
-                                <label>Contact Person</label>
-                                <Row>
-                                    <Col xs={6}>
-                                        <Phone></Phone>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Fax></Fax>
-                                    </Col>
-                                </Row>
-
-                                <OutstandingJudgmentsQuestion question="Are there any outstanding judgments against the Company or any of its Principals?"></OutstandingJudgmentsQuestion>
-                                <LitigationPendingQuestion question="Is there any litigation pending against the Company or any of its Principals?"></LitigationPendingQuestion>
-                                <BankruptcyQuestion question="Have the Company or any of its Principals been the subject of any bankruptcy or insolvency proceeding (voluntary or involuntary)?"></BankruptcyQuestion>
-
-                                <br></br>
-                                <br></br>
-
-                                <p>
-                                    The undersigned certifies that all of the above information is true and correct, that the Company's financial statements are true and correct and accurately present the financial condition of the Company, and that the undersigned's personal financial statement is true and correct and  accurately presents the  financial condition of the undersigned. The undersigned understands that [INSERT NAME OF LENDER/FACTOR] intends to rely thereon in determining whether to offer financing to the Company.
-                                </p>
-                                <Input ref="Date" type="text" label="Date" defaultValue=""/>
-                                <Input ref="Signature" type="text" label="Signature" defaultValue=""/>
-
-                                <p>
-                                    The undersigned hereby authorizes [INSERT NAME OF LENDER/FACTOR] to gather and use, from time to time, without the undersigned's knowledge, any and all financial and/or credit information relating to the Company that can be obtained from any source whatsoever, including but not limited to banks, trade associates and creditors. The undersigned also hereby authorizes [INSERT NAME OF LENDER/FACTOR] to investigate the personal credit history of the Company and the undersigned and obtain credit bureau reports on the Company and the undersigned from time to time at the sole discretion of [INSERT NAME OF LENDER/FACTOR]. The undersigned hereby authorizes its suppliers, customers, accountants,  attorneys and employees and any person or consumer reporting agency to give [INSERT NAME OF LENDER/FACTOR] any information it may have on the Company or the undersigned. In addition, the undersigned authorizes [INSERT NAME OF LENDER/FACTOR] to answer questions about its credit experience with the Company. This serves as the undersigned's permission to release any information regarding this application for purposes of credit investigation to [INSERT NAME OF LENDER/FACTOR]
-                                </p>
-                                <Input ref="Date" type="text" label="Date" defaultValue=""/>
-                                <Input ref="Signature" type="text" label="Signature" defaultValue=""/>
-
-                                <div className="pull-right">
-                                    <Button bsStyle="primary" className="btn-spaced" onClick={this.handleSubmit}>Save</Button>
-                                    <Button bsStyle="primary" onClick={this.next}>Next</Button>
-                                </div>
-
+                                <ContactInfoForm></ContactInfoForm>
                             </TabPane>
                             <TabPane eventKey={2} tab="Company Information">
-
-                                <h2>Company Information</h2>
-
-                                <Row>
-                                    <Col xs={6}>
-                                        <Input ref="Name" type="text" label="Name" defaultValue=""/>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Input type="select" label="Type of entity">
-                                            <option value="0">Corp</option>
-                                            <option value="1">LLC</option>
-                                            <option value="2">LP</option>
-                                            <option value="3">GP</option>
-                                            <option value="4">Sole Proprietorship</option>
-                                            <option value="4">Other</option>
-                                        </Input>
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col xs={6}>
-                                        <Input ref="Tax ID No." type="text" label="Tax ID No." defaultValue=""/>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <StatesShort></StatesShort>
-                                    </Col>
-                                </Row>
-
-                                <Input type="textarea" label="Describe company's business" defaultValue="" />
-
-                                <h4>List equity holders and their percentage ownership</h4>
-
-                                <Row>
-                                    <Col xs={12}>
-                                        <EquityHolders></EquityHolders>
-                                    </Col>
-                                </Row>
-
-                                <h4>List all subsidiaries</h4>
-
-                                <Row>
-                                    <Col xs={12}>
-                                        <NameStateLong></NameStateLong>
-                                    </Col>
-                                </Row>
-
-                                <h4>List all affiliates (companies whose equity is at least 50% owned by any combination of the Company's principals)</h4>
-
-                                <Row>
-                                    <Col xs={12}>
-                                        <NameStateLong></NameStateLong>
-                                    </Col>
-                                </Row>
-
-                                <h4>Tradenames, tradestyles and trademarks (if any)</h4>
-                                <Row>
-                                    <Col xs={12}>
-                                        <NameStateUSPTO></NameStateUSPTO>
-                                    </Col>
-                                </Row>
-
-                                <h2>Principals</h2>
-
-                                <Principal></Principal>
-
-                                <div className="pull-right">
-                                    <Button bsStyle="primary" className="btn-spaced" onClick={this.handleSubmit}>Save</Button>
-                                    <Button bsStyle="primary" onClick={this.next}>Next</Button>
-                                </div>
-
+                                <CompanyInformationForm></CompanyInformationForm>
                             </TabPane>
                             <TabPane eventKey={3} tab="Financials">
 
@@ -2168,7 +1814,7 @@ var Form = React.createClass({
                                         <Input ref="City" type="text" label="City" defaultValue=""/>
                                     </Col>
                                     <Col xs={4}>
-                                        <Input ref="State" type="text" label="State" defaultValue=""/>
+                                        <States label="State"></States>
                                     </Col>
                                 </Row>
 
@@ -2177,17 +1823,17 @@ var Form = React.createClass({
                                         <Input ref="Contact Person" type="text" label="Contact Person" defaultValue=""/>
                                     </Col>
                                     <Col xs={4}>
-                                        <Input ref="Phone" type="text" label="Phone" defaultValue=""/>
+                                        <Phone></Phone>
                                     </Col>
                                     <Col xs={4}>
-                                        <Input ref="Fax" type="text" label="Fax" defaultValue=""/>
+                                        <Fax></Fax>
                                     </Col>
                                 </Row>
 
                                 <Input ref="Number of Years Using Services" type="text" label="Number of Years Using Services" defaultValue=""/>
-                                <Input ref="Company's FYE" type="text" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])\d\d" label="Company's FYE" defaultValue=""/>
+                                <CompanyFYE></CompanyFYE>
 
-                                <h3>How Often are Financials Generated?</h3>
+                                <h3>How Often are Financials Generated{"?"}</h3>
                                 <FinancialsFrequency></FinancialsFrequency>
 
                                 <Input ref="No. of Employees" type="text" label="No. of Employees" defaultValue=""/>
@@ -2212,7 +1858,7 @@ var Form = React.createClass({
                                         <Input ref="Time Period" type="text" label="Time Period" defaultValue="" />
                                     </Col>
                                     <Col xs={6}>
-                                        <StatesFederalShort></StatesFederalShort>
+                                        <States options={['Federal']} label="Taxing Authority"></States>
                                     </Col>
                                 </Row>
 
