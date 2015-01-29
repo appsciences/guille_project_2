@@ -1,0 +1,14 @@
+{
+  "name": "project-name",
+  "version": "0.0.1",
+  "main": "app/src/app.js",
+  "dependencies": {
+    "react": "*",
+    "react-bootstrap": "*"
+  },
+  "devDependencies": {
+    "reactify": "*",
+    "browserify": "*"
+  },
+  "private": true
+}
